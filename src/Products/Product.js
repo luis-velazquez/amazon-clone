@@ -1,8 +1,26 @@
 import React from "react";
 import "./Product.css";
+import { useStateValue } from "../State/StateProvider";
 
-// curly braces breaks apart the code we pass in
 function Product({ id, title, image, price, rating }) {
+  const [{ basket }, dispatch] = useStateValue();
+
+  console.log("this is the basket >>>", basket)
+
+  const addToBasket = () => {
+    // dispatch the item into the data layer
+    dispatch({
+      type: "ADD_TO_BASKET",
+      item: {
+        id: id,
+        title: title,
+        image: image,
+        price: price,
+        rating: rating,
+      },
+    });
+  };
+
   return (
     <div className="product">
       <div className="product__info">
@@ -15,16 +33,16 @@ function Product({ id, title, image, price, rating }) {
           {Array(rating)
             .fill()
             .map((_, i) => (
-              <p>⭐️</p>
+              <p>🌟</p>
             ))}
         </div>
       </div>
-      <img src={image} alt=""
-      />
-      <button>Add to basket</button>
+
+      <img src={image} alt="" />
+
+      <button onClick={addToBasket}>Add to Basket</button>
     </div>
   );
 }
 
 export default Product;
-// rfce
