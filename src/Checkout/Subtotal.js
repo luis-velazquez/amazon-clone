@@ -1,7 +1,10 @@
 import React from "react";
+import { getBasketTotal } from "../State/reducer";
+import { useStateValue } from "../State/StateProvider";
 import "./Subtotal.css";
 
 function Subtotal() {
+  const [{ basket }, dispatch] = useStateValue();
   //     const numberFormat = () => {
   //        return
   //     }
@@ -9,7 +12,7 @@ function Subtotal() {
   return (
     <div className="subtotal">
       <p>
-        Subtotal (0 items) <strong>0</strong>
+        Subtotal ({basket.length} items): <strong>{getBasketTotal(basket)}</strong>
       </p>
       <small className="subtotal__gift">
         <input type="checkbox" className="subtotal__gift" />

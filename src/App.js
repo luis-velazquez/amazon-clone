@@ -3,19 +3,29 @@ import "./App.css";
 import Home from "./Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Checkout from "./Checkout/Checkout";
+import Login from "./Login/Login";
 
 function App() {
   return (
     //BEM
     <div className="app">
-      <Header />
       <BrowserRouter>
         <Routes>
+          <Route
+            path="/login/*"
+            element={
+              <>
+                <Header />
+                <Login />
+              </>
+            }
+          />
           <Route
             exact
             path="/"
             element={
               <>
+                <Header />
                 <Home />
               </>
             }
@@ -24,7 +34,8 @@ function App() {
             path="/checkout"
             element={
               <>
-                <Checkout/>
+                <Header />
+                <Checkout />
               </>
             }
           />
