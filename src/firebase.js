@@ -1,11 +1,13 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore';
+
 // import firebase from "firebase";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDfaRGBr25Nd4lH1JxU_dyzA9LGhU-0ZjU",
     authDomain: "challenge-fc327.firebaseapp.com",
+    // databaseURL: "https://challenge-4b2b2.firebaseio.com",
     projectId: "challenge-fc327",
     storageBucket: "challenge-fc327.appspot.com",
     messagingSenderId: "325330051019",

@@ -1,13 +1,21 @@
 import Header from "./Layout/Header";
 import "./App.css";
 import Home from "./Home";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Checkout from "./Checkout/Checkout";
 import Login from "./Login/Login";
+import Payment from "./Payment/Payment";
+import Orders from "./Orders/Orders";
 import { useEffect } from "react";
 import { auth } from "./firebase";
 import { useStateValue } from "./State/StateProvider";
-import Payment from "./Payment/Payment";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+// The code below is completely safe you don't need to hide it
+const promise = loadStripe(
+  "pk_test_51LG9U7EP4sOSEnhRVtPyXZO2ctdMY51ChiC6jeA1OvPTuezuxow4dkecia91NBOoX79XtqpIV6WR29g0jlVX178R00Pu5croLm"
+);
 
 function App() {
   const [{}, dispatch] = useStateValue();
@@ -39,46 +47,26 @@ function App() {
   return (
     //BEM
     <div className="app">
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              <>
-                <Login />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/"
-            element={
-              <>
-                <Header />
-                <Home />
-              </>
-            }
-          />
-          <Route
-            path="/checkout"
-            element={
-              <>
-                <Header />
-                <Checkout />
-              </>
-            }
-          />
-          <Route
-            path="/payment"
-            element={
-              <>
-                <Header />
-                <Payment />
-              </>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+      <Router>
+        <div className="app">
+          <Routes>
+            <Route path="/" element={[<Header />, <Home />]} />
+            <Route path="/checkout" element={((<Header />), (<Checkout />))} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/payment"
+              element={
+                <>
+                  <Header />
+                  <Elements stripe={promise}>
+                    <Payment />
+                  </Elements>
+                </>
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
     </div>
   );
 }
